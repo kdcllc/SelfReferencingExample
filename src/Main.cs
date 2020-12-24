@@ -41,9 +41,9 @@ namespace SelfReferencingSample
             var rootLevelCusomtersWithChidlren = virtualRootNode.Children.ToList();
 
             var flattenedListOfCustiners = virtualRootNode.Children.Flatten(node => node.Children).ToList();
-            
+
             // Each Folder entity can be retrieved via node.Data property:
-            var customer = flattenedListOfCustiners.First(node => node.Data.FullName == "Parent - 0");
+            var customer = flattenedListOfCustiners.First(node => node.Data.FullName == "Parent - 1");
             var folder = customer.Data;
             int level = customer.Level;
             bool isLeaf = customer.IsLeaf;
@@ -63,11 +63,11 @@ namespace SelfReferencingSample
             // parent
             for (int p = 0; p < 100; p++)
             {
+                var pu = p + 1;
                 var pe = new Customer
                 {
-                    FullName = $"Parent - {p}",
-                    ParentId = 0,
-                    Children = null
+                    FullName = $"Parent - {pu}",
+                    ParentId = null
                 };
 
                 ctx.Customers.Add(pe);
@@ -76,14 +76,14 @@ namespace SelfReferencingSample
                 // child
                 for (int c = 0; c < 50; c++)
                 {
+                    var cu = c + 1;
                     var ce = new Customer
                     {
                         ParentId = pe.Id,
-                        FullName = $"Child - {c}"
+                        FullName = $"Child - {cu} - Parent {pe.Id}"
                     };
                     ctx.Customers.Add(ce);
                 }
-
                 await ctx.SaveChangesAsync();
             }
         }

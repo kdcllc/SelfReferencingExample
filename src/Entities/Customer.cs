@@ -8,7 +8,7 @@ namespace SelfReferencingSample.Entities
 
         public string FullName { get; set; }
 
-        public long ParentId { get; set; }
+        public long? ParentId { get; set; }
 
         public Customer Parent { get; set; }
 

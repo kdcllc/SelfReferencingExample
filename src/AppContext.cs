@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SelfReferencingSample
 {
     // https://medium.com/@dmitry.pavlov/tree-structure-in-ef-core-how-to-configure-a-self-referencing-table-and-use-it-53effad60bf
-    // 
+    //
     public class AppContext : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
@@ -27,6 +27,7 @@ namespace SelfReferencingSample
         {
             modelBuilder.Entity<Customer>(entity =>
             {
+                entity.Property(x => x.Id).ValueGeneratedOnAdd();
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.FullName);
                 entity.HasOne(x => x.Parent)
